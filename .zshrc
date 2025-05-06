@@ -30,8 +30,22 @@ alias z='zshz 2>&1'
 # -- Git aliases
 alias gs='git status -s'
 
+alias ga='git add'
+alias gc='git commit'
+alias gd='git diff'
 
+alias gp='git push'
+alias gpu='git push -u origin'
 
+alias gu='git pull'
+
+alias gl='git log --oneline'
+
+alias gb='git branch'
+
+alias gcl='git clone'
+
+# -- omzsh theme
 source ~/powerlevel10k/powerlevel10k.zsh-theme
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
