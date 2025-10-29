@@ -15,20 +15,37 @@ source $ZSH/oh-my-zsh.sh
 
 # User configuration
 
+# -- Terminal aliases
 alias l='ls -lah'
 alias la='ls -lAh'
 alias ll='eza --all --group --header --group-directories-first --long --icons --tree --level 1'
 alias ls='ls -G'
 alias lsa='ls -lah'
-alias md='mkdir -p'
-alias p=pnpm
-alias rd=rmdir
-alias run-help=man
 alias t=tree
 alias tn='tmux new -s'
 alias tt='tree -L 1'
 alias which-command=whence
 alias z='zshz 2>&1'
+
+# -- Git aliases
+alias gs='git status -s'
+
+alias ga='git add'
+alias gc='git commit'
+alias gd='git diff'
+
+alias gp='git push'
+alias gpu='git push -u origin'
+
+alias gu='git pull'
+
+alias gl='git log --oneline'
+
+alias gb='git branch'
+
+alias gcl='git clone'
+
+# -- omzsh theme
 source ~/powerlevel10k/powerlevel10k.zsh-theme
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
