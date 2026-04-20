@@ -1,0 +1,126 @@
+""" References -----------------------------
+"1. https://towardsdatascience.com/the-essential-ideavim-remaps-291d4cd3971b/
+
+
+""" Map Leader Key -------------------------
+let mapleader=" "
+
+""" Set IntelliJ / IdeaVim handlers ---------
+sethandler <c-j> a:vim
+sethandler <c-k> a:vim
+
+""" Plugins  --------------------------------
+Plug 'machakann/vim-highlightedyank'
+Plug 'tpope/vim-surround'		    " ys, cs, ds, S
+
+""" Common settings -------------------------
+set showmode
+set so=5
+set incsearch
+set nu
+set surround
+set multiple-cursors
+set commentary
+set argtextobj
+set textobj-entire
+set exchange
+set hlsearch
+set ignorecase
+set smartcase
+set visualbell
+set number
+set relativenumber
+
+set clipboard+=unnamed
+set clipboard+=ideaput
+set ideajoin
+set ideastatusicon=gray
+set NERDTree
+
+
+""" Easy of use on ideavimrc settings -------------------------
+nnoremap <leader>E :e ~/.ideavimrc<CR>
+nnoremap <leader>R :action IdeaVim.ReloadVimRc.reload<CR>
+
+
+""" Plugin settings -------------------------
+let g:argtextobj_pairs="[:],(:),<:>"
+" <C-n> seems to me as a better solution than <M-n>,
+" but we should finally support vim-visual-multi because vim-multiple-cursors is deprecated now
+map <C-n> <Plug>NextWholeOccurrence
+
+nmap S <Action>(flash.search)
+xmap S <Action>(flash.search)
+
+
+
+
+""" Window Split Management -----------------------------
+nnoremap <leader>wv <C-w>v
+nnoremap <leader>ws <C-w>s
+nnoremap <leader>wc <C-w>c
+nnoremap <leader>w- :action Unsplit<CR>
+nnoremap <leader>wm :action MoveEditorToOppositeTabGroup<CR>
+
+
+
+
+""" Panel Movement Management -----------------------------
+nnoremap <c-h> <c-w>h
+nnoremap <c-l> <c-w>l
+nnoremap <c-j> <c-w>j
+nnoremap <c-k> <c-w>k
+
+
+""" Tab Management -----------------------------
+nnoremap <TAB> :action NextTab<CR>
+nnoremap <S-TAB> :action PreviousTab<CR>
+""" Windows Version works with ALT
+nnoremap <A-Right> :action NextTab<CR>
+nnoremap <A-Left> :action PreviousTab<CR>
+
+nnoremap <A-q> :action CloseContent<CR>
+
+
+
+
+""" Code Indentation Management -----------------------------
+vnoremap < <gv
+vnoremap > >gv
+
+""" Code Movement Management -----------------------------
+nnoremap [[ :action MethodUp<CR>
+nnoremap ]] :action MethodDown<CR>
+
+""" Code Folding / Expanding Management -----------------------------
+nnoremap ze :action ExpandAllRegions<CR>
+nnoremap zf :action ExpandAllToLevel1<CR>
+
+
+""" Code Actions Management -----------------------------
+nnoremap <leader>rn :action RenameElement<CR>
+nnoremap <leader>ca :action ParameterInfo<CR>
+
+
+""" Navigation / File Bar Management -----------------------------
+nnoremap <leader>f/ :action FindInPath<CR>
+nnoremap <leader>fa :action GotoAction<CR>
+nnoremap <leader>ff :action GotoFile<CR>
+nnoremap <leader><leader> :action GotoFile<CR>
+nnoremap <leader>fs :action GotoSymbol<CR>
+nnoremap <leader>fu :action FindUsages<CR>
+
+
+""" Navigation / Project Bar Management -----------------------------
+"nnoremap <A-1> :action ActivateProjectToolWindow<CR>
+"nnoremap <A-1> :NERDTreeToggle<CR>
+
+
+""" Navigation / Project Bar Management -----------------------------
+nnoremap <C-d> <C-d>zz
+nnoremap <C-u> <C-u>zz
+
+
+
+""" Code Run / Debug Management -----------------------------
+nnoremap <leader>rp :action Run<CR>

@@ -35,7 +35,7 @@ alias gc='git commit'
 alias gd='git diff'
 
 alias gp='git push'
-alias gpu='git push -u origin'
+alias gpsu='git push -u origin HEAD'
 
 alias gu='git pull'
 
@@ -44,6 +44,8 @@ alias gl='git log --oneline'
 alias gb='git branch'
 
 alias gcl='git clone'
+
+alias gco='git checkout -b'
 
 # -- omzsh theme
 source ~/powerlevel10k/powerlevel10k.zsh-theme
