@@ -124,3 +124,8 @@ nnoremap <C-u> <C-u>zz
 
 """ Code Run / Debug Management -----------------------------
 nnoremap <leader>rp :action Run<CR>
+
+
+
+""" Code Run / Debug Management -----------------------------
+vnoremap <leader>c :action CommentByLineComment<CR>
