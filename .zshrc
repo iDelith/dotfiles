@@ -8,12 +8,15 @@ fi
 export ZSH=$HOME/.oh-my-zsh
 export JAVA_HOME="$HOME/.sdkman/candidates/java/current"
 export PATH="$JAVA_HOME/bin:$PATH"
+export PATH="/usr/local/bin:$PATH"
 
 ZSH_THEME="powerlevel10k/powerlevel10k"
 
 plugins=(git)
 
 source $ZSH/oh-my-zsh.sh
+
+
 
 # User configuration
 
@@ -27,7 +30,7 @@ alias t=tree
 alias tn='tmux new -s'
 alias tt='tree -L 1'
 alias which-command=whence
-alias z='zshz 2>&1'
+# alias z='zshz 2>&1'
 
 # -- Git aliases
 alias gs='git status -s'
@@ -55,6 +58,9 @@ source ~/powerlevel10k/powerlevel10k.zsh-theme
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
+# Adding evaluators for .zshrc
+eval "$(/opt/homebrew/bin/brew shellenv)"
+eval "$(zoxide init zsh)"
 
 # THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="$HOME/.sdkman"
