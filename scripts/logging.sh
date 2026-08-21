@@ -11,3 +11,11 @@ log_success() {
 log_error() {
     printf '[ERROR] %s\n' "$1" >&2
 }
+
+log_skip() {
+    printf '[SKIP] %s\n' "$1"
+}
+
+log_section() {
+    printf '\n==> %s\n\n' "$1"
+}
