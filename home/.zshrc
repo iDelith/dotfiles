@@ -1,52 +1,22 @@
-# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-fi
+# Load shell modules in a predictable order.
+zsh_state_file="${XDG_STATE_HOME:-$HOME/.local/state}/dotfiles/selections/zsh-integrations/enabled.zsh"
+[[ -r "$zsh_state_file" ]] && source "$zsh_state_file"
 
+zsh_config_dir="${XDG_CONFIG_HOME:-$HOME/.config}/zsh"
+zsh_module_dirs=(
+  environment
+  history
+  shell-options
+  completion
+  aliases
+  functions
+  integrations
+)
 
-# Path to your Oh My Zsh installation.
-export ZSH=$HOME/.oh-my-zsh
+for zsh_module_dir in "${zsh_module_dirs[@]}"; do
+  for zsh_module_file in "$zsh_config_dir/$zsh_module_dir"/*.zsh(N); do
+    source "$zsh_module_file"
+  done
+done
 
-ZSH_THEME="powerlevel10k/powerlevel10k"
-
-plugins=(git)
-
-source $ZSH/oh-my-zsh.sh
-
-# User configuration
-
-# -- Terminal aliases
-alias l='ls -lah'
-alias la='ls -lAh'
-alias ll='eza --all --group --header --group-directories-first --long --icons --tree --level 1'
-alias ls='ls -G'
-alias lsa='ls -lah'
-alias t=tree
-alias tn='tmux new -s'
-alias tt='tree -L 1'
-alias which-command=whence
-alias z='zshz 2>&1'
-
-# -- Git aliases
-alias gs='git status -s'
-
-alias ga='git add'
-alias gc='git commit'
-alias gd='git diff'
-
-alias gp='git push'
-alias gpu='git push -u origin'
-
-alias gu='git pull'
-
-alias gl='git log --oneline'
-
-alias gb='git branch'
-
-alias gcl='git clone'
-
-# -- omzsh theme
-source ~/powerlevel10k/powerlevel10k.zsh-theme
-
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+unset zsh_state_file zsh_config_dir zsh_module_dirs zsh_module_dir zsh_module_file

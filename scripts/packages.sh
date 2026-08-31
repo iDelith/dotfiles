@@ -14,6 +14,23 @@ read_package_list() {
     done < "$package_file"
 }
 
+read_zsh_integration_packages() {
+    local package_file
+    local package_files=()
+
+    shopt -s nullglob
+    package_files=("$DOTFILES_DIR/packages/zsh-integrations"/*.txt)
+    shopt -u nullglob
+
+    if [[ "${NON_INTERACTIVE:-false}" == true ]]; then
+        for package_file in "${package_files[@]}"; do
+            read_package_list "$package_file"
+        done
+    elif [[ "${ZSH_INTEGRATION_STARSHIP:-0}" == 1 ]]; then
+        read_package_list "$DOTFILES_DIR/packages/zsh-integrations/starship.txt"
+    fi
+}
+
 # ------------------------------------------------------------------------------
 # Arch Linux
 # ------------------------------------------------------------------------------
@@ -35,6 +52,7 @@ install_arch_packages() {
     done < <(
         read_package_list "$DOTFILES_DIR/packages/common.txt"
         read_package_list "$DOTFILES_DIR/packages/arch.txt"
+        read_zsh_integration_packages
     )
 }
 
@@ -82,6 +100,7 @@ install_macos_packages() {
     done < <(
         read_package_list "$DOTFILES_DIR/packages/common.txt"
         read_package_list "$DOTFILES_DIR/packages/macos.txt"
+        read_zsh_integration_packages
     )
 }
 
