@@ -96,12 +96,24 @@ register_github_key() {
     if ! command -v gh >/dev/null 2>&1; then
         log_info "GitHub CLI is unavailable; register the public key manually."
         printf 'GitHub → Settings → SSH and GPG keys → New SSH key\n'
+        [[ -t 0 && -t 1 ]] || {
+            log_error "Run this script interactively after registering the public key."
+            return 1
+        }
+        printf 'Press ENTER after registering the key with GitHub. '
+        IFS= read -r
         return 0
     fi
 
     if ! gh auth status >/dev/null 2>&1; then
         log_info "GitHub CLI is not authenticated; register the public key manually."
         printf 'Authenticate with gh, then run: gh ssh-key add %s\n' "$public_key"
+        [[ -t 0 && -t 1 ]] || {
+            log_error "Run this script interactively after registering the public key."
+            return 1
+        }
+        printf 'Press ENTER after registering the key with GitHub. '
+        IFS= read -r
         return 0
     fi
 
@@ -119,8 +131,17 @@ register_github_key() {
 
 verify_github_ssh() {
     local output
+    local output_file
 
-    output="$(ssh -T -o BatchMode=yes git@github.com 2>&1 || true)"
+    if [[ -t 0 && -t 1 ]]; then
+        output_file="$(mktemp)"
+        ssh -T git@github.com 2>&1 | tee "$output_file" || true
+        output="$(cat "$output_file")"
+        rm "$output_file"
+    else
+        output="$(ssh -T -o BatchMode=yes git@github.com 2>&1 || true)"
+    fi
+
     if [[ "$output" == *"successfully authenticated"* ]]; then
         log_success "GitHub SSH authentication verified."
         return 0
