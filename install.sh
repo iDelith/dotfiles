@@ -16,6 +16,7 @@ readonly HOME_DIR="$HOME"
 source "$DOTFILES_DIR/scripts/logging.sh"
 source "$DOTFILES_DIR/scripts/system.sh"
 source "$DOTFILES_DIR/scripts/packages.sh"
+source "$DOTFILES_DIR/scripts/links.sh"
 
 # ------------------------------------------------------------------------------
 # Main
@@ -47,6 +48,10 @@ main() {
     log_section "Package installation"
 
     install_packages
+
+    log_section "Symbolic Link Management"
+
+    link_home "$DOTFILES_DIR/home" "$HOME_DIR"
 
     log_success "Installation completed successfully."
 }

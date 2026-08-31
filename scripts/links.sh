@@ -51,3 +51,45 @@ link_file() {
 
     log_success "Linked: $destination"
 }
+
+
+# ------------------------------------------------------------------------------
+# Recursive home deployment
+# ------------------------------------------------------------------------------
+
+link_home() {
+    local source_root="$1"
+    local destination_root="$2"
+    local source
+    local relative
+    local destination
+    local parent
+    local entries=()
+
+    if [[ ! -d "$source_root" ]]; then
+        log_error "Home source directory does not exist: $source_root"
+        return 1
+    fi
+
+    mkdir -p "$destination_root" || {
+        log_error "Unable to create home destination: $destination_root"
+        return 1
+    }
+
+    shopt -s nullglob dotglob
+    entries=("$source_root"/*)
+    shopt -u nullglob dotglob
+
+    for source in "${entries[@]}"; do
+        relative="${source#"$source_root"/}"
+        destination="$destination_root/$relative"
+        parent="$(dirname "$destination")"
+
+        mkdir -p "$parent" || {
+            log_error "Unable to create parent directory: $parent"
+            return 1
+        }
+
+        link_file "$source" "$destination" || return 1
+    done
+}
