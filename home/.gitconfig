@@ -1,6 +1,5 @@
-[user]
-	name = Bruno Rodrigues
-	email = brunrod@live.com
+[include]
+    path = ~/.local/state/dotfiles/git/identity.gitconfig
 
 ; [commit]
 ;     gpgSign = true
