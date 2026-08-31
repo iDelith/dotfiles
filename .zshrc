@@ -1,3 +1,67 @@
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
 
-# Added by cua-driver-rs installer — see https://github.com/trycua/cua
-export PATH="/home/delith/.local/bin:$PATH"
+
+# Path to your Oh My Zsh installation.
+export ZSH=$HOME/.oh-my-zsh
+export JAVA_HOME="$HOME/.sdkman/candidates/java/current"
+export PATH="$JAVA_HOME/bin:$PATH"
+export PATH="/usr/local/bin:$PATH"
+
+ZSH_THEME="powerlevel10k/powerlevel10k"
+
+plugins=(git)
+
+source $ZSH/oh-my-zsh.sh
+
+
+
+# User configuration
+
+# -- Terminal aliases
+alias l='ls -lah'
+alias la='ls -lAh'
+alias ll='eza --all --group --header --group-directories-first --long --icons --tree --level 1'
+alias ls='ls -G'
+alias lsa='ls -lah'
+alias t=tree
+alias tn='tmux new -s'
+alias tt='tree -L 1'
+alias which-command=whence
+# alias z='zshz 2>&1'
+
+# -- Git aliases
+alias gs='git status -s'
+
+alias ga='git add'
+alias gc='git commit'
+alias gd='git diff'
+
+alias gp='git push'
+alias gpsu='git push -u origin HEAD'
+
+alias gu='git pull'
+
+alias gl='git log --oneline'
+
+alias gb='git branch'
+
+alias gcl='git clone'
+
+alias gco='git checkout -b'
+
+# -- omzsh theme
+source ~/powerlevel10k/powerlevel10k.zsh-theme
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+# Adding evaluators for .zshrc
+eval "$(/opt/homebrew/bin/brew shellenv)"
+eval "$(zoxide init zsh)"
+
+# THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+export SDKMAN_DIR="$HOME/.sdkman"
+[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
