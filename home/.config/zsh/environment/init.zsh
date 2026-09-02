@@ -9,5 +9,7 @@ typeset -U path PATH
 path=(
   "$HOME/.local/bin"
   "$HOME/bin"
+  "$HOME/.hermes/hermes-agent"
+  "$HOME/.hermes/bin"
   $path
 )

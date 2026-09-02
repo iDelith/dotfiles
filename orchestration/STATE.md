@@ -3,33 +3,31 @@
 ## Current Stage
 
 **Stage:** Installer Foundation and Shell Bootstrap
-**Status:** Complete
+**Status:** In progress
 **Owner:** User + active coding agent
 
 ## Current Task
 
-The installer foundation, recursive symbolic-link management, modular Zsh
-configuration, Starship integration, interactive `ZSH Integrations` selection,
-persisted selection state, Git identity state, and standalone SSH setup are
-implemented, validated, and merged into `main`. External shell frameworks
-remain intentionally optional.
+The installer foundation, modular Zsh configuration, Starship integration,
+interactive `ZSH Integrations` selection, persisted selection state, Git
+identity state, and standalone SSH setup are implemented. This branch is
+revisiting recursive home deployment and login-shell PATH persistence after a
+restart exposed an incorrect `.zshrc` link and missing PATH entries.
 
-The primitive behavior of `backup_file()` and `link_file()`, recursive
-linking, and the integrated configuration phase have been validated in
-temporary test environments. Continue to avoid destructive testing against
+The revised recursive linker and login-shell PATH behavior have been validated
+in temporary test environments. Continue to avoid destructive testing against
 the real `$HOME`.
 
 ## Resume Point
 
-The current baseline is merged into `main` at commit `7cdde7e`. Future work
-should start on a new feature branch and follow the atomic PR workflow.
+The active branch is `fix/zsh-path-persistence`. Review the exact diff and
+preserve the unrelated deletion of the repository-root `.zshrc`.
 
 ## Next
 
-1. Choose the next milestone, likely additional interactive selection sections
-   or broader end-to-end testing.
-2. Create a dedicated feature branch for that milestone.
-3. Preserve the existing backup and unrelated worktree changes.
+1. Review the recursive linker and PATH changes.
+2. Run the final syntax, isolated startup, and diff checks.
+3. Obtain separate approval before creating a commit.
 
 ## Blocked
 
@@ -54,3 +52,4 @@ None.
 - Git identity state and remote read preflight
 - Standalone SSH setup
 - Pull request integration into `main`
+- Recursive home deployment correction and login-shell PATH persistence (in progress)
