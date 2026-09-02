@@ -94,11 +94,15 @@ A filesystem-like representation of `$HOME`.
 home/.zshrc
     → ~/.zshrc
 
-home/.config/nvim/
-    → ~/.config/nvim/
+home/.config/nvim/init.lua
+    → ~/.config/nvim/init.lua
 ```
 
-The installer should recursively map `home/` into `$HOME` using symbolic links.
+The installer recursively maps every entry under `home/` into `$HOME` using
+the same relative path. Directories are traversed so existing user directory
+trees can be preserved, while files and symlinks are managed individually.
+For example, `home/.zshrc` becomes `~/.zshrc` and points to the exact source
+`$DOTFILES_DIR/home/.zshrc`.
 
 ### `packages/`
 
@@ -123,9 +127,10 @@ Implementation modules with cohesive responsibilities.
 
 The shell configuration is split into concern-based directories under
 `home/.config/zsh/`. Each directory may contain multiple `.zsh` modules, and
-`home/.zshrc` loads the directories in a predictable order. Starship is an
-integration/prompt layer and is initialized only when its executable is
-available.
+`home/.zshrc` loads the directories in a predictable order. Login shells load
+`home/.zprofile`, which sources the shared environment/PATH module before
+interactive configuration. Starship is an integration/prompt layer and is
+initialized only when its executable is available.
 
 ### Installer selection state
 

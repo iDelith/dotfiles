@@ -183,14 +183,17 @@ temporary test environment for the documented filesystem cases.
 
 ### `link_home()`
 
-Recursively deploys the repository's `home/` tree by linking each top-level
-entry into the target home directory. Directory entries are linked as whole
-trees, preserving nested configuration paths without hardcoding individual
-files.
+Recursively deploys the repository's `home/` tree into the target home
+directory. Directories are created or traversed in place and every file (and
+symlink) is linked at its matching relative path. This means, for example,
+`home/.zshrc` always maps to `~/.zshrc` with a target of
+`$DOTFILES_DIR/home/.zshrc`.
 
 The function creates the destination home directory and required parent
-directories, while delegating replacement and backup behavior to
-`link_file()`.
+directories, while delegating file and symlink replacement behavior to
+`link_file()`. Existing real directories are preserved so their contents can
+be reconciled recursively instead of being replaced by a link to the entire
+repository directory.
 
 ---
 
@@ -238,7 +241,8 @@ The symlink-management milestone is complete:
 frameworks. It includes:
 
 - Environment defaults for editor and XDG paths
-- User-local `PATH` entries
+- User-local `PATH` entries, including `~/.local/bin`, `~/bin`, and Hermes
+  user-local directories when present
 - History settings
 - Native Zsh options and completion
 - Portable aliases with optional-command fallbacks
@@ -249,7 +253,9 @@ Oh My Zsh, Powerlevel10k, and `zsh-z` are intentionally not loaded by the
 baseline configuration. Starship is loaded as an optional prompt integration
 when its executable is available.
 
-The configuration was validated in an isolated temporary home with Zsh.
+`home/.zprofile` loads the shared environment module for login shells, while
+`.zshrc` continues to load the complete interactive configuration. The
+configuration was validated in an isolated temporary home with Zsh.
 
 Shell modules are organized into concern-based directories under
 `home/.config/zsh/`. Each directory can contain multiple `.zsh` files and is

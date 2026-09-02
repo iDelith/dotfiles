@@ -433,3 +433,20 @@ setup work through PR #10.
 The repository now uses a PR-based workflow: changes are developed on feature
 branches, pushed with `git push -u origin HEAD`, reviewed where possible, and
 merged into `main`. Direct pushes to `main` are not part of the workflow.
+
+---
+
+## 2026-09-02 — Recursive Home Mapping and Login PATH Persistence
+
+Revisited the home deployment implementation after an incorrect `.zshrc`
+symlink target was observed. The linker now traverses `home/` recursively,
+preserves existing real directories, and links each file or symlink at its
+matching relative path. This prevents a source-root mismatch such as linking
+`~/.zshrc` to `$DOTFILES_DIR/.zshrc` instead of
+`$DOTFILES_DIR/home/.zshrc`.
+
+Added `home/.zprofile` to load the shared environment module for login shells.
+The PATH configuration retains the inherited PATH, includes `~/.local/bin`
+and `~/bin`, and includes Hermes user-local directories when installed.
+Behavior was verified in disposable temporary homes without modifying the real
+user home.
