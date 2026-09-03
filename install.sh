@@ -84,11 +84,6 @@ main() {
     log_info "Dotfiles directory: $DOTFILES_DIR"
     log_info "Environment validated successfully."
 
-    log_section "Git Setup"
-
-    configure_git_identity "$HOME_DIR"
-    verify_git_remote
-
     log_section "ZSH Integrations"
 
     select_zsh_integrations
@@ -108,6 +103,11 @@ main() {
     log_section "Symbolic Link Management"
 
     link_home "$DOTFILES_DIR/home" "$HOME_DIR"
+
+    log_section "Git Setup"
+
+    configure_git_identity "$HOME_DIR"
+    verify_git_remote
 
     log_success "Installation completed successfully."
 }

@@ -450,3 +450,21 @@ The PATH configuration retains the inherited PATH, includes `~/.local/bin`
 and `~/bin`, and includes Hermes user-local directories when installed.
 Behavior was verified in disposable temporary homes without modifying the real
 user home.
+
+---
+
+## 2026-09-02 — Deferred Git Remote Validation
+
+Moved the installer's Git setup phase to the end of the workflow, after package
+installation and home configuration deployment. This allows a fresh machine to
+finish its local dotfiles setup before Git identity or GitHub remote access is
+validated. The Git behavior itself remains unchanged, and the standalone SSH
+setup workflow is still not invoked automatically.
+
+---
+
+## 2026-09-02 — Package Installation Summary
+
+Added package-installation reporting for installed and already-installed
+package counts. The installer now follows the summary with a list of
+applications installed during the current run for quick verification.

@@ -311,15 +311,22 @@ The main installer currently uses these phases:
 
 ```text
 System Detection
-Git Setup
 ZSH Integrations
 Privilege Check
 Package installation
 Symbolic Link Management
+Git Setup
 ```
 
 `install.sh` invokes module functions without embedding their implementation
-details directly in the orchestrator.
+details directly in the orchestrator. Git identity and remote read-access
+validation run last so a fresh machine can complete local configuration before
+any GitHub interaction is attempted.
+
+The package installation phase reports installed, already-installed, and
+resolved package counts. It then lists only the applications installed during
+the current run, providing a concise way to identify missing or skipped
+applications without reviewing the full command log.
 
 The intended mapping is:
 
