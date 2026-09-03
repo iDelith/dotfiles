@@ -20,9 +20,9 @@ the real `$HOME`.
 
 ## Resume Point
 
-The active branch is `fix/zsh-path-persistence`. Review the exact diff,
-preserve the unrelated deletion of the repository-root `.zshrc`, and verify
-the deferred Git setup ordering.
+The active branch is `main` after merging the installer reporting and deferred
+Git setup changes. Preserve the unrelated deletion of the repository-root
+`.zshrc` in the primary checkout.
 
 ## Next
 
