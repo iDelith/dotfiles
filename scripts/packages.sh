@@ -4,6 +4,46 @@
 # Package list helpers
 # ------------------------------------------------------------------------------
 
+PACKAGE_INSTALLED_COUNT=0
+PACKAGE_SKIPPED_COUNT=0
+PACKAGE_INSTALLED=()
+
+reset_package_installation_report() {
+    PACKAGE_INSTALLED_COUNT=0
+    PACKAGE_SKIPPED_COUNT=0
+    PACKAGE_INSTALLED=()
+}
+
+record_package_installed() {
+    local package="$1"
+
+    PACKAGE_INSTALLED_COUNT=$((PACKAGE_INSTALLED_COUNT + 1))
+    PACKAGE_INSTALLED+=("$package")
+}
+
+record_package_skipped() {
+    PACKAGE_SKIPPED_COUNT=$((PACKAGE_SKIPPED_COUNT + 1))
+}
+
+report_package_installation() {
+    local package
+
+    printf '\n  Package summary\n'
+    printf '    Installed: %s\n' "$PACKAGE_INSTALLED_COUNT"
+    printf '    Already installed: %s\n' "$PACKAGE_SKIPPED_COUNT"
+    printf '    Total resolved: %s\n' "$((PACKAGE_INSTALLED_COUNT + PACKAGE_SKIPPED_COUNT))"
+
+    printf '\n  Applications installed during this run\n'
+    if ((${#PACKAGE_INSTALLED[@]} == 0)); then
+        printf '    None\n'
+        return 0
+    fi
+
+    for package in "${PACKAGE_INSTALLED[@]}"; do
+        printf '    - %s\n' "$package"
+    done
+}
+
 read_package_list() {
     local package_file="$1"
     local package
@@ -41,6 +81,7 @@ install_arch_packages() {
     while IFS= read -r package; do
         if pacman -Q "$package" >/dev/null 2>&1; then
             log_skip "Package already installed: $package"
+            record_package_skipped
             continue
         fi
 
@@ -49,6 +90,7 @@ install_arch_packages() {
         sudo pacman -S --needed --noconfirm "$package"
 
         log_success "Package installed: $package"
+        record_package_installed "$package"
     done < <(
         read_package_list "$DOTFILES_DIR/packages/common.txt"
         read_package_list "$DOTFILES_DIR/packages/arch.txt"
@@ -89,6 +131,7 @@ install_macos_packages() {
     while IFS= read -r package; do
         if brew list --formula "$package" >/dev/null 2>&1; then
             log_skip "Package already installed: $package"
+            record_package_skipped
             continue
         fi
 
@@ -97,6 +140,7 @@ install_macos_packages() {
         brew install "$package"
 
         log_success "Package installed: $package"
+        record_package_installed "$package"
     done < <(
         read_package_list "$DOTFILES_DIR/packages/common.txt"
         read_package_list "$DOTFILES_DIR/packages/macos.txt"
@@ -109,6 +153,8 @@ install_macos_packages() {
 # ------------------------------------------------------------------------------
 
 install_packages() {
+    reset_package_installation_report
+
     case "$OS_FAMILY" in
         linux)
             install_linux_packages
@@ -123,4 +169,6 @@ install_packages() {
             exit 1
             ;;
     esac
+
+    report_package_installation
 }

@@ -20,14 +20,14 @@ the real `$HOME`.
 
 ## Resume Point
 
-The active branch is `fix/zsh-path-persistence`. Review the exact diff and
-preserve the unrelated deletion of the repository-root `.zshrc`.
+The active branch is `fix/zsh-path-persistence`. Review the exact diff,
+preserve the unrelated deletion of the repository-root `.zshrc`, and verify
+the deferred Git setup ordering.
 
 ## Next
 
-1. Review the recursive linker and PATH changes.
-2. Run the final syntax, isolated startup, and diff checks.
-3. Obtain separate approval before creating a commit.
+1. Review the exact diff and preserve unrelated changes.
+2. Obtain separate approval before creating a commit.
 
 ## Blocked
 
@@ -51,5 +51,8 @@ None.
 - Modular Zsh configuration and Starship integration
 - Git identity state and remote read preflight
 - Standalone SSH setup
+- Deferred Git remote validation until after local configuration
+- Package installation summary and newly installed application list
 - Pull request integration into `main`
-- Recursive home deployment correction and login-shell PATH persistence (in progress)
+- Recursive home deployment correction and login-shell PATH persistence
+- Deferred Git remote validation ordering (implemented and verified)
